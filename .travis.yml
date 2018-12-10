@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+services:
+  - mongodb
+cache:
+  directories:
+  - node_modules
+env:
+- CI=true
+deploy:
+  provider: heroku
+  api_key:
+    secure: kpwGC+rC10J6PZchBHOS+rsSzcmzlKAigWJMNnoUcMqkDfBrOYEKFys0Rs3fLtEj1c+MRhIpoZUcbDU1QQ3Y4n+7ANfwMtMpL4q3olpvIdApsSeaXbSE/xQdjtayOYLyOefL3kiMpbIywLVsIfISJMXjyPkdx4BNTr14amox4VN0oswZI8D8PilaJV/AiJyKfTbVYsOPrct5XJT1Ax459zlgPSUNkzhSKAgB7omUjkZTH73MsaltYc+lcaF0FaR4gsjevAM+qhJUaXtfpJ1yRUaL8nBZ4GRX+H/vqBSdF3wQYwI3zndBsH7/rSeVUwxmc3jL0Iyw0RvQ78VgWFQS/ORa4C5hPNb20a4B1rQM6+3EKaH5w1m2yrUE9pWZEJbXc4v4p8kHXpWD9UKQPOlqerBAXW+xNbmvFUfRlyvd6Ad65rGkYar2T5JOqPhPm0yL/AJiUnie+9QSDZQsnpUeQljLeUeZAx/AJfoJ3LsOjhgRxvcuet37Nj8cwRH7AUlieaHh0I3FHTZofp8vnv3MVCnGDSDaFAgU0VoRTyFpuqMZHaG4pRztvxY0sYv/lknH7oKAgErDWT1Rjr77DwYWXStyzmf5x/xrcIaLO+ILKlTzryEayaMxgWT9FciDucxfFJISwpANJg4mXjX8nemUeO2u+B5zVPWHsvaxvvunWiA=
+  app: powerful-brook-78998
