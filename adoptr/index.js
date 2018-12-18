@@ -1,5 +1,5 @@
 'use strict';
-const {Adoptr, AdoptrPreferences} = require('./models');
+const {Adoptr} = require('./models');
 const {router} = require('./router');
 
-module.exports = {Adoptr, AdoptrPreferences, router};
+module.exports = {Adoptr, router};

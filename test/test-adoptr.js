@@ -30,23 +30,34 @@ const token = jwt.sign(
 
 chai.use(chaiHttp);
 
-function seedAdoptrData() {
+function seedGardenData() {
   const seedData = [];
   for (let i = 1; i <= 10; i++) {
-    seedData.push(generateAdoptrData());
+    seedData.push(generateGardenData());
   }
   return Adoptr.insertMany(seedData);
 }
 
-function generateAdoptrData() {
-  let adoptrData = {
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function nextWater(data) {
+    return addDays(data.lastWatered, data.waterEvery);
+}
+
+function generateGardenData() {
+  let gardenData = {
     username: _username,
     name: faker.random.word(),
     planted: new Date(),
     waterEvery: faker.random.number(),
     lastWatered: new Date(),
   };
-  return adoptrData;
+  gardenData.nextWater = nextWater(gardenData);
+  return gardenData;
 }
 
 function tearDownDb() {
@@ -63,7 +74,7 @@ describe('Adoptr API resource', function () {
   });
 
   beforeEach(function () {
-    return seedAdoptrData();
+    return seedGardenData();
   });
 
   afterEach(function () {
@@ -74,7 +85,7 @@ describe('Adoptr API resource', function () {
     it('should return existing records for logged in user', function() {
       let res;
       return chai.request(app)
-      .get('/api/my-pets/' + _username)
+      .get('/api/adoptr/' + _username)
       .set('Authorization', `Bearer ${token}`)
       .then(function(_res) {
         res = _res;
@@ -90,42 +101,42 @@ describe('Adoptr API resource', function () {
     });
 
     it('should return records with correct fields', function() {
-      let resAdoptr;
+      let resGarden;
       return chai.request(app)
-        .get('/api/my-pets/' + _username)
+        .get('/api/adoptr/' + _username)
         .set('Authorization', `Bearer ${token}`)
         .then(function(res) {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body).to.be.a('array');
           expect(res.body).to.have.lengthOf.at.least(1);
-          res.body.forEach(function(pet) {
-            expect(pet).to.be.a('object');
-            expect(pet).to.include.keys(
+          res.body.forEach(function(garden) {
+            expect(garden).to.be.a('object');
+            expect(garden).to.include.keys(
               'username', 'id', 'name', 'waterEvery', 'lastWatered', 'planted', 'nextWater');
           });
-          resAdoptr = res.body[0];
-          return Adoptr.findById(resAdoptr.id);
+          resGarden = res.body[0];
+          return Adoptr.findById(resGarden.id);
         })
-        .then(function(pet) {
-          expect(resAdoptr.id).to.equal(pet.id);
-          expect(resAdoptr.username).to.equal(pet.username);
-          expect(resAdoptr.name).to.equal(pet.name);
-          expect(resAdoptr.waterEvery).to.equal(pet.waterEvery);
-          expect(resAdoptr.lastWatered).to.equal(pet.lastWatered.toDateString());
-          expect(resAdoptr.planted).to.equal(pet.planted.toDateString());
-          expect(resAdoptr.nextWater).to.equal(pet.nextWater.toDateString());
+        .then(function(garden) {
+          expect(resGarden.id).to.equal(garden.id);
+          expect(resGarden.username).to.equal(garden.username);
+          expect(resGarden.name).to.equal(garden.name);
+          expect(resGarden.waterEvery).to.equal(garden.waterEvery);
+          expect(resGarden.lastWatered).to.equal(garden.lastWatered.toDateString());
+          expect(resGarden.planted).to.equal(garden.planted.toDateString());
+          expect(resGarden.nextWater).to.equal(garden.nextWater.toDateString());
         });
     });
   });
 
   describe('POST endpoint', function() {
     it('should add a new record', function() {
-      const newPet = generateAdoptrData();
+      const newPlant = generateGardenData();
       return chai.request(app)
-        .post('/api/my-pets/')
+        .post('/api/adoptr/')
         .set('Authorization', `Bearer ${token}`)
-        .send(newPet)
+        .send(newPlant)
         .then(function(res) {
           expect(res).to.have.status(201);
           expect(res).to.be.json;
@@ -134,11 +145,11 @@ describe('Adoptr API resource', function () {
             'id', 'username', 'name', 'planted', 'waterEvery', 'lastWatered', 'nextWater');
           return Adoptr.findById(res.body.id);
         })
-        .then(function(pet) {
-          expect(pet.id).to.not.be.null;
-          expect(pet.username).to.equal(newPet.username);
-          expect(pet.name).to.equal(newPet.name);
-          expect(pet.waterEvery).to.equal(newPet.waterEvery);
+        .then(function(garden) {
+          expect(garden.id).to.not.be.null;
+          expect(garden.username).to.equal(newPlant.username);
+          expect(garden.name).to.equal(newPlant.name);
+          expect(garden.waterEvery).to.equal(newPlant.waterEvery);
         });
     });
   });
@@ -151,10 +162,10 @@ describe('Adoptr API resource', function () {
       };
       return Adoptr
         .findOne()
-        .then(function(pet) {
-          updateData.id = pet.id;
+        .then(function(garden) {
+          updateData.id = garden.id;
           return chai.request(app)
-          .put(`/api/my-pets/${pet.id}`)
+          .put(`/api/adoptr/${garden.id}`)
           .set('Authorization', `Bearer ${token}`)
           .send(updateData);
         })
@@ -162,30 +173,30 @@ describe('Adoptr API resource', function () {
           expect (res).to.have.status(204);
           return Adoptr.findById(updateData.id);
         })
-        .then(function(pet) {
-          expect(pet.waterEvery).to.equal(updateData.waterEvery);
-          expect(pet.lastWatered.toDateString()).to.equal(updateData.lastWatered.toDateString());
+        .then(function(garden) {
+          expect(garden.waterEvery).to.equal(updateData.waterEvery);
+          expect(garden.lastWatered.toDateString()).to.equal(updateData.lastWatered.toDateString());
         });
     });
   });
 
   describe('DELETE endpoint', function() {
     it('should delete a record by id', function() {
-      let pet;
+      let garden;
       return Adoptr
         .findOne()
-        .then(function(_pet) {
-          pet = _pet;
+        .then(function(_garden) {
+          garden = _garden;
           return chai.request(app)
-            .delete(`/api/my-pets/${pet.id}`)
+            .delete(`/api/adoptr/${garden.id}`)
             .set('Authorization', `Bearer ${token}`);
         })
         .then(function(res) {
           expect(res).to.have.status(204);
-          return Adoptr.findById(pet.id);
+          return Adoptr.findById(garden.id);
         })
-        .then(function(_pet) {
-          expect(_pet).to.be.null;
+        .then(function(_garden) {
+          expect(_garden).to.be.null;
         });
     });
   });

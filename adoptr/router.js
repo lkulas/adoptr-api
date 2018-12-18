@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const {Adoptr, AdoptrPreferences} = require('./models');
+const {Adoptr} = require('./models');
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ const jsonParser = bodyParser.json();
 router.get('/', jsonParser, jwtAuth, (req, res) => {
 	Adoptr
 		.find()
-		.then(pets => {
-			res.status(200).json(pets.map(pet => pet.serialize()));
+		.then(gardens => {
+			res.status(200).json(gardens.map(garden => garden.serialize()));
 		})
 		.catch(err => {
 			console.error(err);
@@ -29,8 +29,8 @@ router.get('/', jsonParser, jwtAuth, (req, res) => {
 router.get('/:username', jsonParser, jwtAuth, (req, res) => {
 	Adoptr
 		.find({ username: req.params.username })
-		.then(pets => {
-			res.status(200).json(pets.map(pet => pet.serialize()));
+		.then(gardens => {
+			res.status(200).json(gardens.map(garden => garden.serialize()));
 		})
 		.catch(err => {
 			console.error(err);
@@ -57,7 +57,7 @@ router.post('/', jsonParser, jwtAuth, (req, res) => {
 			waterEvery: req.body.waterEvery,
 			lastWatered: new Date()
 		})
-		.then(Adoptr => res.status(201).json(Adoptr.serialize()))
+		.then(Garden => res.status(201).json(Garden.serialize()))
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({error: 'Internal server error'});
@@ -80,7 +80,7 @@ router.put('/:id', jsonParser, jwtAuth, (req, res) => {
 	});
 	Adoptr
 		.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-		.then(updatedPet => res.status(204).end())
+		.then(updatedPlant => res.status(204).end())
 		.catch(err => res.status(500).json({error: 'Internal server error'}));
 });
 
