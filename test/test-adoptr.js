@@ -30,34 +30,76 @@ const token = jwt.sign(
 
 chai.use(chaiHttp);
 
-function seedGardenData() {
+function seedAdoptrData() {
   const seedData = [];
   for (let i = 1; i <= 10; i++) {
-    seedData.push(generateGardenData());
+    seedData.push(generateAdoptrData());
   }
   return Adoptr.insertMany(seedData);
 }
 
-function addDays(date, days) {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
-
-function nextWater(data) {
-    return addDays(data.lastWatered, data.waterEvery);
-}
-
-function generateGardenData() {
-  let gardenData = {
+function generateAdoptrData() {
+  let adoptrData = {
     username: _username,
-    name: faker.random.word(),
-    planted: new Date(),
-    waterEvery: faker.random.number(),
-    lastWatered: new Date(),
+    animal: {
+      dog: true,
+      cat: false
+    },
+    age: {
+      puppyOrKitten: true,
+      young: true,
+      adult: true,
+      senior: false
+    },
+    size: {
+      small: true,
+      medium: true,
+      large: false,
+      extraLarge: false
+    },
+    gender: {
+      male: true,
+      female: true
+    },
+    goodWith: {
+      children: false,
+      dogs: true,
+      cats: false
+    },
+    health: {
+      altered: true,
+      hasShots: true,
+      housetrained: false
+    },
+    savedMatches: [{
+      animal: 'Dog',
+      name: faker.name.firstName(),
+      age: 'Adult',
+      size: 'Small',
+      animalId: faker.random.number().toString(),
+      breed: 'Corgi',
+      sex: 'Male',
+      altered: true,
+      hasShots: true,
+      housetrained: false,
+      contact: {
+        phone: faker.phone.phoneNumber(),
+        email: faker.internet.email(),
+        address1: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        zip: faker.address.zipCode()
+      },
+      photo: faker.image.animals(),
+      description: faker.lorem.paragraph(),
+      goodWith: {
+        children: true,
+        dogs: true,
+        cats: false
+      }
+    }]
   };
-  gardenData.nextWater = nextWater(gardenData);
-  return gardenData;
+  return adoptrData;
 }
 
 function tearDownDb() {
@@ -74,7 +116,7 @@ describe('Adoptr API resource', function () {
   });
 
   beforeEach(function () {
-    return seedGardenData();
+    return seedAdoptrData();
   });
 
   afterEach(function () {
@@ -132,7 +174,7 @@ describe('Adoptr API resource', function () {
 
   describe('POST endpoint', function() {
     it('should add a new record', function() {
-      const newPlant = generateGardenData();
+      const newPlant = generateAdoptrData();
       return chai.request(app)
         .post('/api/adoptr/')
         .set('Authorization', `Bearer ${token}`)
