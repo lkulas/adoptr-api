@@ -8,6 +8,7 @@ const passport = require('passport');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: adoptrRouter } = require('./adoptr');
+const { router: preferencesRouter } = require('./preferences');
 
 mongoose.Promise = global.Promise;
 
@@ -33,6 +34,7 @@ passport.use(jwtStrategy);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/adoptr/', adoptrRouter);
+app.use('/api/preferences/', preferencesRouter);
 app.use(express.static('public'));
 
 const jwtAuth = passport.authenticate('jwt', { session: false });

@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const {Adoptr} = require('./models');
+const {Preferences} = require('./models');
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ const jsonParser = bodyParser.json();
 
 // GET - for specific user
 router.get('/:username', jsonParser, jwtAuth, (req, res) => {
-	Adoptr
+	Preferences
 		.find({ username: req.params.username })
 		.then(pets => {
 			res.status(200).json(pets.map(pet => pet.serialize()));
@@ -28,21 +28,13 @@ router.get('/:username', jsonParser, jwtAuth, (req, res) => {
 // POST
 router.post('/', jsonParser, jwtAuth, (req, res) => {
 	const requiredFields = [
-		'username', 
 		'animal', 
-		'name', 
+		'username', 
 		'age', 
-		'size',
-		'animalId',
-		'breed',
-		'sex',
-		'altered',
-		'hasShots',
-		'housetrained',
+		'size', 
+		'gender',
 		'goodWith',
-		'contact',
-		'photo',
-		'description'
+		'health'
 	];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -52,38 +44,47 @@ router.post('/', jsonParser, jwtAuth, (req, res) => {
 			return res.status(400).send(message);
 		}
 	}
-	Adoptr
+	Preferences
 		.create({
 			username: req.body.username,
 			animal: req.body.animal,
-			name: req.body.name,
 			age: req.body.age,
 			size: req.body.size,
-			animalId: req.body.animalId,
-			breed: req.body.breed,
-			sex: req.body.sex,
-			altered: req.body.altered,
-			hasShots: req.body.hasShots,
-			housetrained: req.body.housetrained,
+			gender: req.body.gender,
 			goodWith: req.body.goodWith,
-			contact: req.body.contact,
-			photo: req.body.photo,
-			description: req.body.description
+			health: req.body.health
 		})
-		.then(Adoptr => res.status(201).json(Adoptr.serialize()))
+		.then(Preferences => res.status(201).json(Preferences.serialize()))
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({error: 'Internal server error'});
 		});
 });
 
-// DELETE
-router.delete('/:id', jwtAuth, (req, res) => {
-	Adoptr
-		.findByIdAndRemove(req.params.id)
-		.then(() => {
-			res.status(204).end();
-		})
+// PUT
+router.put('/:id', jsonParser, jwtAuth, (req, res) => {
+	if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+		res.status(400).json({
+			error: 'Request path id and request body id must match'
+		});
+	}
+	const updated = {};
+	const updateableFields = [
+		'animal', 
+		'age',
+		'size',
+		'gender',
+		'goodWith',
+		'health'
+	];
+	updateableFields.forEach(field => {
+		if (field in req.body) {
+			updated[field] = req.body[field];
+		}
+	});
+	Preferences
+		.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+		.then(updatedPet => res.status(204).end())
 		.catch(err => res.status(500).json({error: 'Internal server error'}));
 });
 
