@@ -204,7 +204,10 @@ describe('Adoptr API resource', function () {
             'state',
             'zip',
             'photo',
-            'description'
+            'description',
+            'cats',
+            'children',
+            'dogs'
           );
           return Adoptr.findById(res.body.id);
         })
@@ -221,8 +224,15 @@ describe('Adoptr API resource', function () {
           expect(adoptr.altered).to.equal(newAdoptr.altered);
           expect(adoptr.hasShots).to.equal(newAdoptr.hasShots);
           expect(adoptr.housetrained).to.equal(newAdoptr.housetrained);
-          expect(adoptr.goodWith).to.equal(newAdoptr.goodWith);
-          expect(adoptr.contact).to.equal(newAdoptr.contact);
+          expect(adoptr.cats).to.equal(newAdoptr.cats);
+          expect(adoptr.children).to.equal(newAdoptr.children);
+          expect(adoptr.dogs).to.equal(newAdoptr.dogs);
+          expect(adoptr.phone).to.equal(newAdoptr.phone);
+          expect(adoptr.email).to.equal(newAdoptr.email);
+          expect(adoptr.address1).to.equal(newAdoptr.address1);
+          expect(adoptr.city).to.equal(newAdoptr.city);
+          expect(adoptr.state).to.equal(newAdoptr.state);
+          expect(adoptr.zip).to.equal(newAdoptr.zip);
           expect(adoptr.photo).to.equal(newAdoptr.photo);
           expect(adoptr.description).to.equal(newAdoptr.description);
         });

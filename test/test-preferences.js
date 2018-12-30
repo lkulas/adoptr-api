@@ -191,12 +191,24 @@ describe('Preferences API resource', function () {
         .then(function(preferences) {
           expect(preferences.id).to.not.be.null;
           expect(preferences.username).to.equal(newPreferences.username);
-          expect(preferences.animal).to.equal(newPreferences.animal);
-          expect(preferences.age).to.equal(newPreferences.age);
-          expect(preferences.size).to.equal(newPreferences.size);
-          expect(preferences.gender).to.equal(newPreferences.gender);
-          expect(preferences.goodWith).to.equal(newPreferences.goodWith);
-          expect(preferences.health).to.equal(newPreferences.health);
+          expect(preferences.cat).to.equal(newPreferences.cat);
+          expect(preferences.dog).to.equal(newPreferences.dog);
+          expect(preferences.puppyOrKitten).to.equal(newPreferences.puppyOrKitten);
+          expect(preferences.young).to.equal(newPreferences.young);
+          expect(preferences.adult).to.equal(newPreferences.adult);
+          expect(preferences.senior).to.equal(newPreferences.senior);
+          expect(preferences.small).to.equal(newPreferences.small);
+          expect(preferences.medium).to.equal(newPreferences.medium);
+          expect(preferences.large).to.equal(newPreferences.large);
+          expect(preferences.extraLarge).to.equal(newPreferences.extraLarge);
+          expect(preferences.male).to.equal(newPreferences.male);
+          expect(preferences.female).to.equal(newPreferences.female);
+          expect(preferences.children).to.equal(newPreferences.children);
+          expect(preferences.dogs).to.equal(newPreferences.dogs);
+          expect(preferences.cats).to.equal(newPreferences.cats);
+          expect(preferences.altered).to.equal(newPreferences.altered);
+          expect(preferences.hasShots).to.equal(newPreferences.hasShots);
+          expect(preferences.housetrained).to.equal(newPreferences.housetrained);
         });
     });
   });
@@ -229,8 +241,12 @@ describe('Preferences API resource', function () {
           return Preferences.findById(updateData.id);
         })
         .then(function(preferences) {
-          expect(preferences.animal).to.equal(updateData.animal);
-          expect(preferences.age).to.equal(updateData.age);
+          expect(preferences.dog).to.equal(updateData.dog);
+          expect(preferences.cat).to.equal(updateData.cat);
+          expect(preferences.puppyOrKitten).to.equal(updateData.puppyOrKitten);
+          expect(preferences.young).to.equal(updateData.young);
+          expect(preferences.adult).to.equal(updateData.adult);
+          expect(preferences.senior).to.equal(updateData.senior);
         });
     });
   });
