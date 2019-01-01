@@ -28,13 +28,25 @@ router.get('/:username', jsonParser, jwtAuth, (req, res) => {
 // POST
 router.post('/', jsonParser, jwtAuth, (req, res) => {
 	const requiredFields = [
-		'animal', 
 		'username', 
-		'age', 
-		'size', 
-		'gender',
-		'goodWith',
-		'health'
+		'dog', 
+		'cat', 
+		'puppyOrKitten', 
+		'young',
+		'adult',
+		'senior',
+		'small',
+		'medium',
+		'large',
+		'extraLarge',
+		'female',
+		'male',
+		'cats',
+		'dogs',
+		'children',
+		'altered',
+		'hasShots',
+		'housetrained'
 	];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -47,12 +59,24 @@ router.post('/', jsonParser, jwtAuth, (req, res) => {
 	Preferences
 		.create({
 			username: req.body.username,
-			animal: req.body.animal,
-			age: req.body.age,
-			size: req.body.size,
-			gender: req.body.gender,
-			goodWith: req.body.goodWith,
-			health: req.body.health
+			dog: req.body.dog,
+			cat: req.body.cat,
+			puppyOrKitten: req.body.puppyOrKitten,
+			young: req.body.young,
+			adult: req.body.adult,
+			senior: req.body.senior,
+			small: req.body.small,
+			medium: req.body.medium,
+			large: req.body.large,
+			extraLarge: req.body.extraLarge,
+			female: req.body.female,
+			male: req.body.male,
+			cats: req.body.cats,
+			dogs: req.body.dogs,
+			children: req.body.children,
+			altered: req.body.altered,
+			hasShots: req.body.hasShots,
+			housetrained: req.body.housetrained,
 		})
 		.then(Preferences => res.status(201).json(Preferences.serialize()))
 		.catch(err => {
@@ -70,12 +94,24 @@ router.put('/:id', jsonParser, jwtAuth, (req, res) => {
 	}
 	const updated = {};
 	const updateableFields = [
-		'animal', 
-		'age',
-		'size',
-		'gender',
-		'goodWith',
-		'health'
+		'dog', 
+		'cat', 
+		'puppyOrKitten', 
+		'young',
+		'adult',
+		'senior',
+		'small',
+		'medium',
+		'large',
+		'extraLarge',
+		'female',
+		'male',
+		'cats',
+		'dogs',
+		'children',
+		'altered',
+		'hasShots',
+		'housetrained'
 	];
 	updateableFields.forEach(field => {
 		if (field in req.body) {

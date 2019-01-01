@@ -4,11 +4,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const cors = require('cors');
 
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: adoptrRouter } = require('./adoptr');
 const { router: preferencesRouter } = require('./preferences');
+const { CLIENT_ORIGIN } = require('./config');
 
 mongoose.Promise = global.Promise;
 
@@ -27,6 +29,12 @@ app.use(function (req, res, next) {
   }
   next();
 });
+
+app.use(
+  cors({
+      origin: CLIENT_ORIGIN
+  })
+);
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);

@@ -40,36 +40,24 @@ function seedPreferencesData() {
 function generatePreferencesData() {
   let preferencesData = {
     username: _username,
-    animal: {
-      dog: true,
-      cat: false
-    },
-    age: {
-      puppyOrKitten: true,
-      young: true,
-      adult: true,
-      senior: false
-    },
-    size: {
-      small: true,
-      medium: true,
-      large: false,
-      extraLarge: false
-    },
-    gender: {
-      male: true,
-      female: true
-    },
-    goodWith: {
-      children: false,
-      dogs: true,
-      cats: false
-    },
-    health: {
-      altered: true,
-      hasShots: true,
-      housetrained: false
-    }
+    dog: true,
+    cat: false,
+    puppyOrKitten: true,
+    young: true,
+    adult: true,
+    senior: false,
+    small: true,
+    medium: true,
+    large: false,
+    extraLarge: false,
+    male: true,
+    female: true,
+    children: false,
+    dogs: true,
+    cats: false,
+    altered: true,
+    hasShots: true,
+    housetrained: false
   };
   return preferencesData;
 }
@@ -129,12 +117,24 @@ describe('Preferences API resource', function () {
             expect(preferences).to.include.keys(
               'username', 
               'id', 
-              'animal',
-              'age',
-              'size',
-              'gender',
-              'goodWith',
-              'health'
+              'dog', 
+              'cat', 
+              'puppyOrKitten', 
+              'young',
+              'adult',
+              'senior',
+              'small',
+              'medium',
+              'large',
+              'extraLarge',
+              'female',
+              'male',
+              'cats',
+              'dogs',
+              'children',
+              'altered',
+              'hasShots',
+              'housetrained'
             );
           });
           resPreferences = res.body[0];
@@ -179,12 +179,24 @@ describe('Preferences API resource', function () {
           expect(res.body).to.include.keys(
             'id', 
             'username', 
-            'animal', 
-            'age', 
-            'size', 
-            'gender', 
-            'goodWith',
-            'health'
+            'dog', 
+            'cat', 
+            'puppyOrKitten', 
+            'young',
+            'adult',
+            'senior',
+            'small',
+            'medium',
+            'large',
+            'extraLarge',
+            'female',
+            'male',
+            'cats',
+            'dogs',
+            'children',
+            'altered',
+            'hasShots',
+            'housetrained'
           );
           return Preferences.findById(res.body.id);
         })
@@ -216,16 +228,12 @@ describe('Preferences API resource', function () {
   describe('PUT endpoint', function() {
     it('should update a record with new fields', function() {
       const updateData = {
-        animal: {
-          dog: false,
-          cat: true
-        },
-        age: {
-          puppyOrKitten: true,
-          young: true,
-          adult: true,
-          senior: true
-        }
+        dog: false,
+        cat: true,
+        puppyOrKitten: true,
+        young: true,
+        adult: true,
+        senior: true
       };
       return Preferences
         .findOne()

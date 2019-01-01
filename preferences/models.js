@@ -6,92 +6,61 @@ mongoose.Promise = global.Promise;
 
 const PreferencesSchema = mongoose.Schema({
   username: {
-    type: String,
-    required: true
+    type: String
   },
-  animal: {
-    dog: {
-      type: Boolean,
-      required: true
-    },
-    cat: {
-      type: Boolean,
-      required: true
-    }
+  dog: {
+    type: Boolean
   },
-  age: {
-    puppyOrKitten: {
-      type: Boolean,
-      required: true
-    },
-    young: {
-      type: Boolean,
-      required: true
-    },
-    adult: {
-      type: Boolean,
-      required: true
-    },
-    senior: {
-      type: Boolean,
-      required: true
-    }
+  cat: {
+    type: Boolean
   },
-  size: {
-    small: {
-      type: Boolean,
-      required: true
-    },
-    medium: {
-      type: Boolean,
-      required: true
-    },
-    large: {
-      type: Boolean,
-      required: true
-    },
-    extraLarge: {
-      type: Boolean,
-      required: true
-    }
+  puppyOrKitten: {
+    type: Boolean
   },
-  gender: {
-    male: {
-      type: Boolean,
-      required: true
-    },
-    female: {
-      type: Boolean,
-      required: true
-    }
+  young: {
+    type: Boolean
   },
-  goodWith: {
-    children: {
-      type: Boolean,
-      required: true
-    },
-    dogs: {
-      type: Boolean,
-      required: true
-    },
-    cats: {
-      type: Boolean,
-      required: true
-    }
+  adult: {
+    type: Boolean
   },
-  health: {
-    altered: {
-      type: Boolean,
-      required: true
-    },
-    hasShots: {
-      type: Boolean,
-      required: true
-    },
-    housetrained: {
-      type: Boolean,
-      required: true
-    }
+  senior: {
+    type: Boolean
+  },
+  small: {
+    type: Boolean
+  },
+  medium: {
+    type: Boolean
+  },
+  large: {
+    type: Boolean
+  },
+  extraLarge: {
+    type: Boolean
+  },
+  male: {
+    type: Boolean
+  },
+  female: {
+    type: Boolean
+  },
+  children: {
+    type: Boolean
+  },
+  dogs: {
+    type: Boolean
+  },
+  cats: {
+    type: Boolean
+  },
+  altered: {
+    type: Boolean
+  },
+  hasShots: {
+    type: Boolean
+  },
+  housetrained: {
+    type: Boolean
   }
 });
 
@@ -99,36 +68,24 @@ PreferencesSchema.methods.serialize = function() {
   return {
     id: this._id,
     username: this.username,
-    animal: {
-      dog: this.animal.dog,
-      cat: this.animal.cat,
-    },
-    age: {
-      puppyOrKitten: this.age.puppyOrKitten,
-      young: this.age.young,
-      adult: this.age.adult,
-      senior: this.age.senior
-    },
-    size: {
-      small: this.size.small,
-      medium: this.size.medium,
-      large: this.size.large,
-      extraLarge: this.size.extraLarge
-    },
-    gender: {
-      male: this.gender.male,
-      female: this.gender.female
-    },
-    goodWith: {
-      children: this.goodWith.children,
-      dogs: this.goodWith.dogs,
-      cats: this.goodWith.cats
-    },
-    health: {
-      altered: this.health.altered,
-      hasShots: this.health.hasShots,
-      housetrained: this.health.housetrained
-    }
+    dog: this.dog,
+    cat: this.cat,
+    puppyOrKitten: this.puppyOrKitten,
+    young: this.young,
+    adult: this.adult,
+    senior: this.senior,
+    small: this.small,
+    medium: this.medium,
+    large: this.large,
+    extraLarge: this.extraLarge,
+    male: this.male,
+    female: this.female,
+    children: this.children,
+    dogs: this.dogs,
+    cats: this.cats,
+    altered: this.altered,
+    hasShots: this.hasShots,
+    housetrained: this.housetrained
   };
 };
 
