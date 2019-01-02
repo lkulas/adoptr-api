@@ -9,67 +9,29 @@ const AdoptrSchema = mongoose.Schema({
     required: true
   },
   animal: {
-    type: String,
-    required: true
+    type: String
   },
   name: {
-    type: String,
-    required: true
+    type: String
   },
   age: {
-    type: String,
-    required: true
+    type: String
   },
   size: {
-    type: String,
-    required: true
-  },
-  animalId: {
-    type: String,
-    required: true
+    type: String
   },
   breed: {
-    type: String,
-    required: true
+    type: String
   },
   sex: {
-    type: String,
-    required: true
-  },
-  altered: {
-    type: Boolean,
-    required: true
-  },
-  hasShots: {
-    type: Boolean,
-    required: true
-  },
-  housetrained: {
-    type: Boolean,
-    required: true
-  },
-  goodWith: {
-    children: {
-      type: Boolean,
-      required: true
-    },
-    dogs: {
-      type: Boolean,
-      required: true
-    },
-    cats: {
-      type: Boolean,
-      required: true
-    }
+    type: String
   },
   contact: {
     phone: {
-      type: String,
-      required: true
+      type: String
     },
     email: {
-      type: String,
-      required: true
+      type: String
     },
     address1: {
       type: String
@@ -78,25 +40,20 @@ const AdoptrSchema = mongoose.Schema({
       type: String
     },
     city: {
-      type: String,
-      required: true
+      type: String
     },
     state: {
-      type: String,
-      required: true
+      type: String
     },
     zip: {
-      type: String,
-      required: true
+      type: String
     },
   },
   photo: {
-    type: String,
-    required: true
+    type: String
   },
   description: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
@@ -111,12 +68,6 @@ AdoptrSchema.methods.serialize = function() {
     animalId: this.animalId,
     breed: this.breed,
     sex: this.sex,
-    altered: this.altered,
-    hasShots: this.hasShots,
-    housetrained: this.housetrained,
-    children: this.goodWith.children,
-    dogs: this.goodWith.dogs,
-    cats: this.goodWith.cats,
     phone: this.contact.phone,
     email: this.contact.email,
     address1: this.contact.address1,

@@ -23,21 +23,7 @@ router.get('/:username', jsonParser, jwtAuth, (req, res) => {
 // POST
 router.post('/', jsonParser, jwtAuth, (req, res) => {
 	const requiredFields = [
-		'username', 
-		'animal', 
-		'name', 
-		'age', 
-		'size',
-		'animalId',
-		'breed',
-		'sex',
-		'altered',
-		'hasShots',
-		'housetrained',
-		'goodWith',
-		'contact',
-		'photo',
-		'description'
+		'username'
 	];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -54,13 +40,8 @@ router.post('/', jsonParser, jwtAuth, (req, res) => {
 			name: req.body.name,
 			age: req.body.age,
 			size: req.body.size,
-			animalId: req.body.animalId,
 			breed: req.body.breed,
 			sex: req.body.sex,
-			altered: req.body.altered,
-			hasShots: req.body.hasShots,
-			housetrained: req.body.housetrained,
-			goodWith: req.body.goodWith,
 			contact: req.body.contact,
 			photo: req.body.photo,
 			description: req.body.description
