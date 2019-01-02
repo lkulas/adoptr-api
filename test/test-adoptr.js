@@ -49,17 +49,8 @@ function generateAdoptrData() {
     name: faker.name.firstName(),
     age: ageOptions[Math.floor(Math.random() * ageOptions.length)],
     size: sizeOptions[Math.floor(Math.random() * sizeOptions.length)],
-    animalId: faker.random.number().toString(),
     breed: faker.random.word(),
     sex: sexOptions[Math.floor(Math.random() * sexOptions.length)],
-    altered: faker.random.boolean(),
-    hasShots: faker.random.boolean(),
-    housetrained: faker.random.boolean(),
-    goodWith: {
-      dogs: faker.random.boolean(),
-      cats: faker.random.boolean(),
-      children: faker.random.boolean(),
-    },
     contact: {
       phone: faker.phone.phoneNumber(),
       email: faker.internet.email(),
@@ -133,21 +124,14 @@ describe('Adoptr API resource', function () {
               'name',
               'age',
               'size',
-              'animalId',
               'breed',
               'sex',
-              'altered',
-              'hasShots',
               'phone',
               'email',
               'address1',
               'city',
               'state',
               'zip',
-              'housetrained',
-              'cats',
-              'children',
-              'dogs',
               'photo',
               'description'
             );
@@ -162,12 +146,8 @@ describe('Adoptr API resource', function () {
           expect(resAdoptr.name).to.equal(adoptr.name);
           expect(resAdoptr.age).to.equal(adoptr.age);
           expect(resAdoptr.size).to.equal(adoptr.size);
-          expect(resAdoptr.animalId).to.equal(adoptr.animalId);
           expect(resAdoptr.breed).to.equal(adoptr.breed);
           expect(resAdoptr.sex).to.equal(adoptr.sex);
-          expect(resAdoptr.altered).to.equal(adoptr.altered);
-          expect(resAdoptr.hasShots).to.equal(adoptr.hasShots);
-          expect(resAdoptr.housetrained).to.equal(adoptr.housetrained);
           expect(resAdoptr.photo).to.equal(adoptr.photo);
           expect(resAdoptr.description).to.equal(adoptr.description);
         });
@@ -191,12 +171,8 @@ describe('Adoptr API resource', function () {
             'name', 
             'age', 
             'size', 
-            'animalId',
             'breed',
             'sex',
-            'altered',
-            'hasShots',
-            'housetrained',
             'phone',
             'email',
             'address1',
@@ -204,10 +180,7 @@ describe('Adoptr API resource', function () {
             'state',
             'zip',
             'photo',
-            'description',
-            'cats',
-            'children',
-            'dogs'
+            'description'
           );
           return Adoptr.findById(res.body.id);
         })
@@ -218,15 +191,8 @@ describe('Adoptr API resource', function () {
           expect(adoptr.name).to.equal(newAdoptr.name);
           expect(adoptr.age).to.equal(newAdoptr.age);
           expect(adoptr.size).to.equal(newAdoptr.size);
-          expect(adoptr.animalId).to.equal(newAdoptr.animalId);
           expect(adoptr.breed).to.equal(newAdoptr.breed);
           expect(adoptr.sex).to.equal(newAdoptr.sex);
-          expect(adoptr.altered).to.equal(newAdoptr.altered);
-          expect(adoptr.hasShots).to.equal(newAdoptr.hasShots);
-          expect(adoptr.housetrained).to.equal(newAdoptr.housetrained);
-          expect(adoptr.cats).to.equal(newAdoptr.cats);
-          expect(adoptr.children).to.equal(newAdoptr.children);
-          expect(adoptr.dogs).to.equal(newAdoptr.dogs);
           expect(adoptr.phone).to.equal(newAdoptr.phone);
           expect(adoptr.email).to.equal(newAdoptr.email);
           expect(adoptr.address1).to.equal(newAdoptr.address1);
