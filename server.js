@@ -5,15 +5,12 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const cors = require('cors');
-
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: adoptrRouter } = require('./adoptr');
-const { CLIENT_ORIGIN } = require('./config');
+const { CLIENT_ORIGIN, PORT, DATABASE_URL } = require('./config');
 
 mongoose.Promise = global.Promise;
-
-const { PORT, DATABASE_URL } = require('./config');
 
 const app = express();
 
@@ -31,7 +28,6 @@ passport.use(jwtStrategy);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/adoptr/', adoptrRouter);
-app.use(express.static('public'));
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
