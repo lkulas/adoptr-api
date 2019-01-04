@@ -1,5 +1,5 @@
 {
-  "name": "garden-tracker",
+  "name": "adoptr-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lkulas/garden-tracker.git"
+    "url": "git+https://github.com/lkulas/adoptr-api.git"
   },
   "keywords": [],
   "author": "Laura Kulas",
